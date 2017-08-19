@@ -3,6 +3,7 @@ from bottle import route, run, post, get, debug, template, request, response, st
 @route('/', method="GET")
 @get('/')
 def index():
+    static_file("notifyMe.js", root=".")
     return """<h1>This is an amazing webpage!</h1>
 <p>No don't leave!!!</p>
 <p>Have a look at <a href="/tables">this!</a></p>
