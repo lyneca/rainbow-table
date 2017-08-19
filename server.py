@@ -1,4 +1,4 @@
-from bottle import run, post, get, static_file, template, request
+from bottle import run, post, get, static_file, template, request, redirect
 import re
 import parse
 import mdOutput as md
@@ -17,7 +17,7 @@ class Ass:
 def get_week(s):
     finds = re.match(r'[Ww]eek ?(\d+)', s)
     if not finds:
-        return None 
+        return None
     return int(finds.groups()[0])
 
 def getAssessments(course_code):
@@ -124,10 +124,18 @@ def online():
 def query():
     code = request.GET.get("unitCode", None)
     getAssessments(code)
+    redirect("/")
 
 @post('/new')
 def new():
-    "Deal with the POST thing for uploading UOS"
+    code = request.forms.get("unitCode")
+    name = request.forms.get("assName")
+    weight = request.forms.get("assessWeight")
+    date_due = request.forms.get("dateDue")
+    time_due = request.forms.get("timeDue")
+    assess_num = parse.numOfAssessments(code)
+    parse.addAssessment(code, {'assessment_number': assess_num, 'name': name, 'is_group': "No", 'weight': weight, 'due_string': date_due[:-1]+" "+time_due})
+    redirect("/")
 
 
 run(debug=True, reload=True)
