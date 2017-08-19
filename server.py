@@ -38,13 +38,9 @@ def css():
 
 @get('/')
 def index():
-    amount_of_units = 7
     data = {'weeks': [x for x in range(17)], 'ass': []}
 
-    # Amount of units:
-    data["num_units"] = str(amount_of_units)
-    
-    # MIDSEM
+    data['num_units'] = 7
     data['weeks'][8] = "Midterm Break"
     data['weeks'][14] = "STUVAC"
     data['weeks'][15] = "Exam Week"
@@ -67,7 +63,6 @@ def index():
                 w = get_week(ass['due_string'])
                 if not w: continue
                 data['ass'].append(Ass(code, ass['name'], w))
-
     return template(str(TEMPLATE_DIR+'/index_.html'), data)
 
 @get('/add')
