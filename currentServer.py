@@ -1,8 +1,8 @@
 from bottle import run, post, get, static_file, template, request
 import re
 import parse
-import mdOutput as md
-import csvOutput as csv
+import mdOutput
+import csvOutput
 
 class Ass:
     def __init__(self, code, name, week):
@@ -43,7 +43,7 @@ def css():
 def index():
     data = {'weeks': [x for x in range(17)], 'ass': []}
 
-    data['num_units'] = parse.numOfUnits()
+    data['num_units'] = 7
     data['weeks'][8] = "Midterm Break"
     data['weeks'][14] = "STUVAC"
     data['weeks'][15] = "Exam Week"
@@ -58,11 +58,6 @@ def index():
 
     # Assessment dates being added in?
     assess = parse.getAssessDict()
-    string = ""
-    for i in assess:
-        string += i+","
-    data['Unit'] = string
-    # Assessment dates being added in?
     for code in assess:
         for ass in assess[code]:
             if ass['due_string'] != "Multiple Weeks":
@@ -87,11 +82,10 @@ def import_unit():
 # Export Planner
 @get('/export')
 def import_unit():
-    codes = parse.getAssessDict() # List of unit codes
-    csvFormat = csv.csvOutput(codes)
-    csvFormat.printToCsv()
-    mdFormat = md.mdOutput(codes)
-    mdFormat.printToMd()
+    csv = csvOutput(getAssessDict())
+    csv.printToCsv()
+    md = mdOutput(getAssessDict())
+    md.printToMd()
     return static_file('export.html', root=TEMPLATE_DIR)
 
 # Is not linked currently!
