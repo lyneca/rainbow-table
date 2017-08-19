@@ -18,20 +18,27 @@ def css():
 
 @get('/')
 def index():
-    amount_of_units = 5
+    amount_of_units = 7
     semester_weeks = 13
     stuff = {}
+
+    # Amount of units:
+    stuff["num_units"] = str(amount_of_units)
 
     # Test (next to Sunday)    
     stuff["test"] = ""
 
     # Units - Assessments Loaded
+    string = ""
     for i in range(amount_of_units):
-        stuff["loaded_u"+str(i+1)] = str(20+10*i)
+        string += str(20+10*i)+","
+    stuff["exams"] = string
 
     # Units - Exams
+    string = ""
     for i in range(amount_of_units):
-        stuff["exam_u"+str(i+1)] = str(20+10*i)
+        string += str(20+10*i)+","
+    stuff["assessments"] = string
 
     # Weeks - Names
     for i in range(semester_weeks):
@@ -41,6 +48,7 @@ def index():
     stuff["MIDSEM"] = str("Week off!")
 
     print(stuff)
+    print(type(stuff['num_units']))
 
     return template(str(TEMPLATE_DIR+'/index.html'), stuff)
 
@@ -68,4 +76,4 @@ def new():
     "some okay response"
 
 
-run(reload=True)
+run(debug=True, reload=True)

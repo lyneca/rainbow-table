@@ -18,23 +18,19 @@
   <a href="#">Export Planner</a>
 </div>
 <table>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
+% for i in range(int(num_units)):
+    <col width={{(100/int(num_units))}}%>
+% end
 <tr>
-<th>Unit 1</th>
-<th>Unit 2</th>
-<th>Unit 3</th>
-<th>Unit 4</th>
-<th>Unit 5</th>
+% for i in range(int(num_units)):
+    <th>Unit {{i+1}}</th>
+% end
 </tr>
-<td>Assessments loaded {{loaded_u1}}%<br/><span title="This is mouse over text!!!">Exam </span> {{exam_u1}}%<br/>Textbooks</td>
-<td>Assessments loaded {{loaded_u2}}%<br/><span title="This is mouse over text!!!">Exam </span> {{exam_u2}}%<br/>Textbooks</td>
-<td>Assessments loaded {{loaded_u3}}%<br/><span title="This is mouse over text!!!">Exam </span> {{exam_u3}}%<br/>Textbooks</td>
-<td>Assessments loaded {{loaded_u4}}%<br/><span title="This is mouse over text!!!">Exam </span> {{exam_u4}}%<br/>Textbooks</td>
-<td>Assessments loaded {{loaded_u5}}%<br/><span title="This is mouse over text!!!">Exam </span> {{exam_u5}}%<br/>Textbooks</td>
+% ass_loaded = assessments.split(",")
+% exam_perc = exams.split(",")
+% for i in range(int(num_units)):
+    <td>Assessments loaded {{ass_loaded[i]}}%<br/><span title="This is mouse over text!!!">Exam </span> {{exam_perc[i]}}%<br/>Textbooks</td>
+% end
 </tr>
 </table>
 
