@@ -1,6 +1,8 @@
-from bottle import run, post, get, static_file
+from bottle import run, post, get, static_file, template
+#import parser
 
 TEMPLATE_DIR = './templates'
+
 
 """
 Endpoints:
@@ -16,7 +18,31 @@ def css():
 
 @get('/')
 def index():
-    return static_file('index.html', root=TEMPLATE_DIR)
+    amount_of_units = 5
+    semester_weeks = 13
+    stuff = {}
+
+    # Test (next to Sunday)    
+    stuff["test"] = ""
+
+    # Units - Assessments Loaded
+    for i in range(amount_of_units):
+        stuff["loaded_u"+str(i+1)] = str(20+10*i)
+
+    # Units - Exams
+    for i in range(amount_of_units):
+        stuff["exam_u"+str(i+1)] = str(20+10*i)
+
+    # Weeks - Names
+    for i in range(semester_weeks):
+        stuff["Week"+str(i+1)] = "Meow meow cat!"
+
+    # MIDSEM
+    stuff["MIDSEM"] = str("Week off!")
+
+    print(stuff)
+
+    return template(str(TEMPLATE_DIR+'/index.html'), stuff)
 
 @get('/add')
 def entry_page():
@@ -34,12 +60,12 @@ def import_unit():
 
 @get('/query')
 def query():
-    return "Query result or whatever lol"
+    "Query result or whatever lol"
 
 @post('/new')
 def new():
     # somehow get post response
-    return "some okay response"
+    "some okay response"
 
 
 run(reload=True)
