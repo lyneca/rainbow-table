@@ -22,8 +22,9 @@
     <col width={{(100/int(num_units))}}%>
 % end
 <tr>
+%unit_loaded = Unit.split(",")
 % for i in range(int(num_units)):
-    <th>Unit {{i+1}}</th>
+    <th>{{unit_loaded[i]}}</th>
 % end
 </tr>
 % ass_loaded = assessments.split(",")

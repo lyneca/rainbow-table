@@ -21,7 +21,7 @@ def css():
 
 @get('/')
 def index():
-    amount_of_units = 7
+    amount_of_units = parse.numOfUnits()
     semester_weeks = 13
     stuff = {}
 
@@ -31,17 +31,26 @@ def index():
     # Test (next to Sunday)
     stuff["test"] = ""
 
+    unitsList = parse.getUnitsList()
+    unitsDict = parse.getAssessDict()
+    string = ''
+    for i in unitsDict:
+        string += i+","
+    stuff["Unit"] = string
+
     # Units - Assessments Loaded
     string = ""
     for i in range(amount_of_units):
-        string += str(20+10*i)+","
-    stuff["exams"] = string
+        percent = str(parse.getUnitPercentage(i, unitsList))
+        string += percent+","
+    stuff["assessments"] = string
 
     # Units - Exams
     string = ""
     for i in range(amount_of_units):
-        string += str(20+10*i)+","
-    stuff["assessments"] = string
+        percent = str(parse.getExamPercentage(i, unitsList))
+        string += percent+","
+    stuff["exams"] = string
 
     # Weeks - Names
     for i in range(semester_weeks):

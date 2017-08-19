@@ -39,6 +39,32 @@ def getAssessDict():
     exec(data.read(), empty)
     return empty['assessment']
 
+def numOfUnits():
+    unitsDict = getAssessDict()
+    num = 0
+    for i in unitsDict.keys():
+        num += 1
+    return num
+
+def getUnitsList():
+    unitsDict = getAssessDict()
+    unitsList = []
+    for i in unitsDict.keys():
+        unitsList.append(unitsDict[i])
+    return unitsList
+
+def getUnitPercentage(num, unitsList):
+    percentage = 0
+    for i in unitsList[num]:
+        percentage += float(i['weight'])
+    return percentage
+
+def getExamPercentage(num, unitsList):
+    for i in unitsList[num]:
+        if i['due_string'] == "Exam Period":
+            return i["weight"]
+    return 0.00
+
 # This stuff runs when you run this file like `python3 __init__.py` (but not when you import it)
 if __name__ == '__main__':
     while True:
