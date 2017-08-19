@@ -1,4 +1,3 @@
-import example, time, csv
 class mdOutput:
     def __init__(self, codes):
         self.courseCodes = codes
@@ -24,7 +23,14 @@ class mdOutput:
 
 
     def getAssignments(self, code):
-        data = example.assessments
+        f = open("data.txt");
+        text = f.read()
+        f.close()
+        o = open("example.py", "w")
+        o.write("assessment = "+text)
+        o.close()
+        import example
+        data = example.assessment
         if code not in data:
             return None
         return data[code]
