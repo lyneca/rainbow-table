@@ -1,5 +1,8 @@
-from bottle import run, post, get, static_file, template
-#import parser
+from bottle import run, post, get, static_file, template, request
+import parse
+
+def getAssessments(course_code):
+    parse.export(course_code)
 
 TEMPLATE_DIR = './templates'
 
@@ -22,10 +25,14 @@ def index():
     semester_weeks = 13
     stuff = {}
 
+<<<<<<< HEAD
     # Amount of units:
     stuff["num_units"] = str(amount_of_units)
 
     # Test (next to Sunday)    
+=======
+    # Test (next to Sunday)
+>>>>>>> a87ea3651421f9cb74b1b2ccf2d20aa8724aca64
     stuff["test"] = ""
 
     # Units - Assessments Loaded
@@ -68,12 +75,12 @@ def import_unit():
 
 @get('/query')
 def query():
-    "Query result or whatever lol"
+    code = request.GET.get("unitCode", None)
+    getAssessments(code)
 
 @post('/new')
-def new():
-    # somehow get post response
-    "some okay response"
+def new(request):
+    "Deal with the POST thing for uploading UOS"
 
 
 run(debug=True, reload=True)

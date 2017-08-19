@@ -32,11 +32,11 @@ def cusp(course_code):
 
 def export(course_code):
     course = cusp(course_code)
-    data = open("../data/data.py", 'r+')
+    data = open("data/data.py", 'r+')
     globs = {}
     exec(data.read(), globs)
     data.close()
-    data = open("../data/data.py", 'w')
+    data = open("data/data.py", 'w')
     globs['assessment'][course_code] = course
     assessment = ''.join('{}{}'.format(key, val) for key, val in globs['assessment'].items())
     data.write("assessment = "+str(globs['assessment']))

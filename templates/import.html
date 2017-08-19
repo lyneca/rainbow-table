@@ -19,17 +19,18 @@
 <h3 style="padding-left:16px">Automatic assessment entry</h3>
 
 <div class="container">
-  <form action="/new">
+  <form action="/new" method=POST>
     <label for="unit">Upload unit of study outline</label><br/>
     <input type="file" name="pic" accept="image/*">
-  	    
+		<input type="submit">
+  </form>
     <p>OR<p>
-    
+	<form action="/query" method=GET>
     <label for="unit">Enter unit of study code to import assessments from CUSP</label>
     <input type="text" id="unit" name="unitCode" placeholder="e.g. MATH1002">
     <br/>
     <input type="submit">
-        
+
   </form>
 </div>
 
