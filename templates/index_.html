@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link type='text/css' rel='stylesheet' href='global.css'>
+	<style>
+	</style>
+	</head>
+	<body>
+
+<div style="padding-left:16px">
+<h1>Rainbow Table</h1>
+</div>
+
+<div class="topnav">
+<a class="active" href="/">Home</a>
+<a href="/import">Import Unit</a>
+<a href="/add">Add Assessment</a>
+<a href="#">Export Planner</a>
+</div>
+<table>
+% for i in range(int(num_units)):
+<col width={{(100/int(num_units))}}%>
+% end
+<tr>
+% for i in range(int(num_units)):
+<th>Unit {{i+1}}</th>
+% end
+</tr>
+</tr>
+</table>
+
+<table>
+<col width="9%">
+% for week in weeks:
+<tr>
+<th><span title="{{week}}">{{week}}</span></th>
+<td>
+	% for a in ass:
+	% if 'm' not in week and ' ' in week:
+	% if int(week.split()[1]) == int(a.week):
+	<div class="assessment" style="background-color: {{a.color}}">{{a}}</div>
+	% end
+	% end
+	% end
+</td>
+</tr>
+% end
+<!--
+  Week 1
+  Week 2
+  Week 3
+  Week 4
+  Week 5
+  Week 6
+  Week 7
+  Week 8
+  Midsem
+  Week 9
+  Week 10
+  Week 11
+  Week 12
+  Week 13
+  Stuvac
+  Exams I
+  Exams II
+-->
+</table>
+
+</body>
+</html>

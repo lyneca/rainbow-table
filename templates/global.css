@@ -42,7 +42,7 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
-  vertical-align: text-top;
+  height: 30px;
 }
 
 .topnav a.active {
@@ -74,3 +74,10 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
+.assessment {
+	display: inline;
+	/* background-color: #88bbff; */
+	padding: 5px;
+	border-radius: 5px;
+	margin: 5px;
+}

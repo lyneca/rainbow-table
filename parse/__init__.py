@@ -68,5 +68,6 @@ def getExamPercentage(num, unitsList):
 
 # This stuff runs when you run this file like `python3 __init__.py` (but not when you import it)
 if __name__ == '__main__':
+    export('INFO1903')
     while True:
         cusp(input('> '))

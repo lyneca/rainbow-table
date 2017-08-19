@@ -1,5 +1,22 @@
 from bottle import run, post, get, static_file, template, request
+import re
 import parse
+
+class Ass:
+    def __init__(self, code, name, week):
+        self.code = code
+        self.name = name
+        self.week = week
+        self.color = hex(hash(self.code))[2:8]
+
+    def __str__(self):
+        return self.code + ' ' + self.name
+
+def get_week(s):
+    finds = re.match(r'[Ww]eek ?(\d+)', s)
+    if not finds:
+        return None 
+    return int(finds.groups()[0])
 
 def getAssessments(course_code):
     parse.export(course_code)
@@ -21,72 +38,32 @@ def css():
 
 @get('/')
 def index():
-    amount_of_units = parse.numOfUnits()
-    semester_weeks = 13
-    stuff = {}
+    data = {'weeks': [x for x in range(17)], 'ass': []}
 
-    # Amount of units:
-    stuff["num_units"] = str(amount_of_units)
+    data['num_units'] = 7
+    data['weeks'][8] = "Midterm Break"
+    data['weeks'][14] = "STUVAC"
+    data['weeks'][15] = "Exam Week"
+    data['weeks'][16] = "Exam Week"
 
-    # Test (next to Sunday)
-    stuff["test"] = ""
+    flag = 0
+    for i in range(17):
+        if type(data['weeks'][i]) is not int:
+            flag = 1
+            continue
+        data['weeks'][i] = "Week %s" % (i + 1 - flag)
 
-    unitsList = parse.getUnitsList()
-    unitsDict = parse.getAssessDict()
-    string = ''
-    for i in unitsDict:
-        string += i+","
-    stuff["Unit"] = string
-
-    # Units - Assessments Loaded
-    string = ""
-    for i in range(amount_of_units):
-        percent = str(parse.getUnitPercentage(i, unitsList))
-        string += percent+","
-    stuff["assessments"] = string
-
-    # Units - Exams
-    string = ""
-    for i in range(amount_of_units):
-        percent = str(parse.getExamPercentage(i, unitsList))
-        string += percent+","
-    stuff["exams"] = string
-
-    # Weeks - Names
-    for i in range(semester_weeks):
-        stuff["Week"+str(i+1)] = "Meow meow cat!"
-
-    # MIDSEM
-    stuff["MIDSEM"] = str("Week off!")
-
-    #Assessment dates being added in?
-    for i in range(96):
-        stuff["assessment"+str(i+1)] = ''
-    days = {'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4, 'Sat': 5, 'Sun': 6}
+    # Assessment dates being added in?
     assess = parse.getAssessDict()
-    for i in assess.keys():
-        for j in range(len(assess[i])):
-            if assess[i][j]['due_string'] != "Multiple Weeks" and assess[i][j]['due_string'] != "Exam Period":
-                due = assess[i][j]['due_string']
-                if len(due) < 7:
-                    week = int(due[5])-1
-                    stuff["assessment"+str(week*7)] = assess[i][j]['name']
-                elif due[6] != " ":
-                    week = int(due[5]+due[6])
-                    if len(due) < 8:
-                        stuff["assessment"+str(week*7 -1)] = assess[i][j]['name']
-                    else:
-                        stuff["assessment"+str(week*7+days[due[9:12]] -1)] = assess[i][j]['name']
-                elif due[6] == " ":
-                    week = int(due[5])-1
-                    stuff["assessment"+str(week*7+days[due[8:11]] +1)] = assess[i][j]['name']
-
-
-
-    print(stuff)
-    print(type(stuff['num_units']))
-
-    return template(str(TEMPLATE_DIR+'/index.html'), stuff)
+    for code in assess:
+        for ass in assess[code]:
+            if ass['due_string'] != "Multiple Weeks":
+                if i in data['weeks']:
+                    i += 1
+                w = get_week(ass['due_string'])
+                if not w: continue
+                data['ass'].append(Ass(code, ass['name'], w))
+    return template(str(TEMPLATE_DIR+'/index_.html'), data)
 
 @get('/add')
 def entry_page():
@@ -111,7 +88,7 @@ def query():
     getAssessments(code)
 
 @post('/new')
-def new(request):
+def new():
     "Deal with the POST thing for uploading UOS"
 
 
