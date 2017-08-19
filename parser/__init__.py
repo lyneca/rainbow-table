@@ -3,7 +3,7 @@ from pprint import pprint
 from bs4 import BeautifulSoup
 
 def parse(course_code):
-    pass  # hahahaha the parse function passes
+    pass
 
 def get_page(link):
     """
@@ -28,10 +28,19 @@ def cusp(course_code):
         'weight': x[3],
         'due_string': x[4]
     } for x in list_ds]
-    return dict_ds 
+    return dict_ds
 
-def export(dictionary):
-    pass  # should probably do something here
+def export(course_code):
+    course = cusp(course_code)
+    data = open("../data/data.py", 'r+')
+    globs = {}
+    exec(data.read(), globs)
+    data.close()
+    data = open("../data/data.py", 'w')
+    globs['assessment'][course_code] = course
+    assessment = ''.join('{}{}'.format(key, val) for key, val in globs['assessment'].items())
+    data.write("assessment = "+str(globs['assessment']))
+    data.close()
 
 # This stuff runs when you run this file like `python3 __init__.py` (but not when you import it)
 if __name__ == '__main__':
