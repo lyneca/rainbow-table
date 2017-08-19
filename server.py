@@ -96,6 +96,9 @@ def entry_page():
 def import_unit():
     return static_file('import.html', root=TEMPLATE_DIR)
 
+@get('/export')
+def export_file():
+    return static_file('export.html', root=TEMPLATE_DIR)
 
 
 ####################################
