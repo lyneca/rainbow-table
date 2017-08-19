@@ -68,12 +68,18 @@ def index():
         for j in range(len(assess[i])):
             if assess[i][j]['due_string'] != "Multiple Weeks" and assess[i][j]['due_string'] != "Exam Period":
                 due = assess[i][j]['due_string']
-                if due[6] != " ":
+                if len(due) < 7:
+                    week = int(due[5])-1
+                    stuff["assessment"+str(week*7)] = assess[i][j]['name']
+                elif due[6] != " ":
                     week = int(due[5]+due[6])
-                    stuff["assessment"+str(week*7+days[due[9:12]] -1)] = assess[i][j]['name']
-                else:
-                    week = int(due[5])
-                    stuff["assessment"+str(week*7+days[due[8:11]] -1)] = assess[i][j]['name']
+                    if len(due) < 8:
+                        stuff["assessment"+str(week*7 -1)] = assess[i][j]['name']
+                    else:
+                        stuff["assessment"+str(week*7+days[due[9:12]] -1)] = assess[i][j]['name']
+                elif due[6] == " ":
+                    week = int(due[5])-1
+                    stuff["assessment"+str(week*7+days[due[8:11]] +1)] = assess[i][j]['name']
 
 
 

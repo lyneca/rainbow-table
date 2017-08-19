@@ -56,7 +56,8 @@ def getUnitsList():
 def getUnitPercentage(num, unitsList):
     percentage = 0
     for i in unitsList[num]:
-        percentage += float(i['weight'])
+        if i['due_string'] != "Multiple Weeks":
+            percentage += float(i['weight'])
     return percentage
 
 def getExamPercentage(num, unitsList):
