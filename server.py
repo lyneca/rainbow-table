@@ -95,12 +95,13 @@ def query():
 @post('/new')
 def new():
     code = request.forms.get("unitCode")
+    name = request.forms.get("assName")
     weight = request.forms.get("assessWeight")
     date_due = request.forms.get("dateDue")
     time_due = request.forms.get("timeDue")
     assess_num = parse.numOfAssessments(code)
     print(weight)
-    parse.addAssessment(code, {'assessment_number': assess_num, 'name': "", 'is_group': "No", 'weight': weight, 'due_string': date_due[:-1]+" "+time_due})
+    parse.addAssessment(code, {'assessment_number': assess_num, 'name': name, 'is_group': "No", 'weight': weight, 'due_string': date_due[:-1]+" "+time_due})
     redirect("/")
 
 
