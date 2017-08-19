@@ -15,7 +15,7 @@ class Ass:
 def get_week(s):
     finds = re.match(r'[Ww]eek ?(\d+)', s)
     if not finds:
-        return None 
+        return None
     return int(finds.groups()[0])
 
 def getAssessments(course_code):
@@ -40,7 +40,7 @@ def css():
 def index():
     data = {'weeks': [x for x in range(17)], 'ass': []}
 
-    data['num_units'] = 7
+    data['num_units'] = parse.numOfUnits()
     data['weeks'][8] = "Midterm Break"
     data['weeks'][14] = "STUVAC"
     data['weeks'][15] = "Exam Week"
@@ -53,8 +53,12 @@ def index():
             continue
         data['weeks'][i] = "Week %s" % (i + 1 - flag)
 
-    # Assessment dates being added in?
     assess = parse.getAssessDict()
+    string = ""
+    for i in assess:
+        string += i+","
+    data['Unit'] = string
+    # Assessment dates being added in?
     for code in assess:
         for ass in assess[code]:
             if ass['due_string'] != "Multiple Weeks":
