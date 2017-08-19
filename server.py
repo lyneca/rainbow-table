@@ -1,5 +1,22 @@
 from bottle import run, post, get, static_file, template, request
+import re
 import parse
+
+class Ass:
+    def __init__(self, code, name, week):
+        self.code = code
+        self.name = name
+        self.week = week
+        self.color = hex(hash(self.code))[2:8]
+
+    def __str__(self):
+        return self.code + ' ' + self.name
+
+def get_week(s):
+    finds = re.match(r'[Ww]eek ?(\d+)', s)
+    if not finds:
+        return None 
+    return int(finds.groups()[0])
 
 def getAssessments(course_code):
     parse.export(course_code)
@@ -22,56 +39,36 @@ def css():
 @get('/')
 def index():
     amount_of_units = 7
-    semester_weeks = 13
-    stuff = {}
+    data = {'weeks': [x for x in range(17)], 'ass': []}
 
     # Amount of units:
-    stuff["num_units"] = str(amount_of_units)
-
-    # Test (next to Sunday)
-    stuff["test"] = ""
-
-    # Units - Assessments Loaded
-    string = ""
-    for i in range(amount_of_units):
-        string += str(20+10*i)+","
-    stuff["exams"] = string
-
-    # Units - Exams
-    string = ""
-    for i in range(amount_of_units):
-        string += str(20+10*i)+","
-    stuff["assessments"] = string
-
-    # Weeks - Names
-    for i in range(semester_weeks):
-        stuff["Week"+str(i+1)] = "Meow meow cat!"
-
+    data["num_units"] = str(amount_of_units)
+    
     # MIDSEM
-    stuff["MIDSEM"] = str("Week off!")
+    data['weeks'][8] = "Midterm Break"
+    data['weeks'][14] = "STUVAC"
+    data['weeks'][15] = "Exam Week"
+    data['weeks'][16] = "Exam Week"
 
-    #Assessment dates being added in?
-    for i in range(96):
-        stuff["assessment"+str(i+1)] = ''
-    days = {'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4, 'Sat': 5, 'Sun': 6}
+    flag = 0
+    for i in range(17):
+        if type(data['weeks'][i]) is not int:
+            flag = 1
+            continue
+        data['weeks'][i] = "Week %s" % (i + 1 - flag)
+
+    # Assessment dates being added in?
     assess = parse.getAssessDict()
-    for i in assess.keys():
-        for j in range(len(assess[i])):
-            if assess[i][j]['due_string'] != "Multiple Weeks" and assess[i][j]['due_string'] != "Exam Period":
-                due = assess[i][j]['due_string']
-                if due[6] != " ":
-                    week = int(due[5]+due[6])
-                    stuff["assessment"+str(week*7+days[due[9:12]] -1)] = assess[i][j]['name']
-                else:
-                    week = int(due[5])
-                    stuff["assessment"+str(week*7+days[due[8:11]] -1)] = assess[i][j]['name']
+    for code in assess:
+        for ass in assess[code]:
+            if ass['due_string'] != "Multiple Weeks":
+                if i in data['weeks']:
+                    i += 1
+                w = get_week(ass['due_string'])
+                if not w: continue
+                data['ass'].append(Ass(code, ass['name'], w))
 
-
-
-    print(stuff)
-    print(type(stuff['num_units']))
-
-    return template(str(TEMPLATE_DIR+'/index.html'), stuff)
+    return template(str(TEMPLATE_DIR+'/index_.html'), data)
 
 @get('/add')
 def entry_page():
@@ -93,7 +90,7 @@ def query():
     getAssessments(code)
 
 @post('/new')
-def new(request):
+def new():
     "Deal with the POST thing for uploading UOS"
 
 
