@@ -1,6 +1,11 @@
-from bottle import run, post, get, static_file
+from bottle import run, post, get, static_file, template, request
+import parse
+
+def getAssessments(course_code):
+    parse.export(course_code)
 
 TEMPLATE_DIR = './templates'
+
 
 """
 Endpoints:
@@ -16,7 +21,43 @@ def css():
 
 @get('/')
 def index():
-    return static_file('index.html', root=TEMPLATE_DIR)
+    amount_of_units = 7
+    semester_weeks = 13
+    stuff = {}
+
+<<<<<<< HEAD
+    # Amount of units:
+    stuff["num_units"] = str(amount_of_units)
+
+    # Test (next to Sunday)    
+=======
+    # Test (next to Sunday)
+>>>>>>> a87ea3651421f9cb74b1b2ccf2d20aa8724aca64
+    stuff["test"] = ""
+
+    # Units - Assessments Loaded
+    string = ""
+    for i in range(amount_of_units):
+        string += str(20+10*i)+","
+    stuff["exams"] = string
+
+    # Units - Exams
+    string = ""
+    for i in range(amount_of_units):
+        string += str(20+10*i)+","
+    stuff["assessments"] = string
+
+    # Weeks - Names
+    for i in range(semester_weeks):
+        stuff["Week"+str(i+1)] = "Meow meow cat!"
+
+    # MIDSEM
+    stuff["MIDSEM"] = str("Week off!")
+
+    print(stuff)
+    print(type(stuff['num_units']))
+
+    return template(str(TEMPLATE_DIR+'/index.html'), stuff)
 
 @get('/add')
 def entry_page():
@@ -34,12 +75,12 @@ def import_unit():
 
 @get('/query')
 def query():
-    return "Query result or whatever lol"
+    code = request.GET.get("unitCode", None)
+    getAssessments(code)
 
 @post('/new')
-def new():
-    # somehow get post response
-    return "some okay response"
+def new(request):
+    "Deal with the POST thing for uploading UOS"
 
 
-run(reload=True)
+run(debug=True, reload=True)
