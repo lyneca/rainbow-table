@@ -3,14 +3,20 @@ from pprint import pprint
 from bs4 import BeautifulSoup
 
 def parse(course_code):
-    pass
+    pass  # hahahaha the parse function passes
 
 def get_page(link):
+    """
+    this thing takes a link and shoves back some html shit
+    """
     r = requests.get(link)
     r.raise_for_status()
     return r.content
 
 def cusp(course_code):
+    """
+    Takes a course code and returns a list containing dictionary objects which represent courses.
+    """
     html = get_page('https://cusp.sydney.edu.au/students/view-unit-page/alpha/' + course_code)
     soup = BeautifulSoup(html, 'html.parser')
     table = soup.find(string="Assessment Methods:").parent.next_element.next_element.next_element.next_element.next_element
@@ -24,12 +30,10 @@ def cusp(course_code):
     } for x in list_ds]
     return dict_ds 
 
+def export(dictionary):
+    pass  # should probably do something here
+
+# This stuff runs when you run this file like `python3 __init__.py` (but not when you import it)
 if __name__ == '__main__':
-    units = [
-        'INFO1103',
-        'INFO1903',
-        'INFO1003',
-        'INFO1105'
-    ]
-    for unit in units:
-        pprint(cusp(unit))
+    while True:
+        cusp(input('> '))
