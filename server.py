@@ -50,6 +50,24 @@ def index():
     # MIDSEM
     stuff["MIDSEM"] = str("Week off!")
 
+    #Assessment dates being added in?
+    for i in range(96):
+        stuff["assessment"+str(i+1)] = ''
+    days = {'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 'Fri': 4, 'Sat': 5, 'Sun': 6}
+    assess = parse.getAssessDict()
+    for i in assess.keys():
+        for j in range(len(assess[i])):
+            if assess[i][j]['due_string'] != "Multiple Weeks" and assess[i][j]['due_string'] != "Exam Period":
+                due = assess[i][j]['due_string']
+                if due[6] != " ":
+                    week = int(due[5]+due[6])
+                    stuff["assessment"+str(week*7+days[due[9:12]] -1)] = assess[i][j]['name']
+                else:
+                    week = int(due[5])
+                    stuff["assessment"+str(week*7+days[due[8:11]] -1)] = assess[i][j]['name']
+
+
+
     print(stuff)
     print(type(stuff['num_units']))
 
