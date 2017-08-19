@@ -1,8 +1,8 @@
-from bottle import run, post, get, static_file, template
+from bottle import run, post, get, static_file, template, request
 import parse
 
 def getAssessments(course_code):
-    export(course_code)
+    parse.export(course_code)
 
 TEMPLATE_DIR = './templates'
 
@@ -63,12 +63,12 @@ def import_unit():
 
 @get('/query')
 def query():
-    "Query result or whatever lol"
+    code = request.GET.get("unitCode", None)
+    getAssessments(code)
 
 @post('/new')
-def new():
-    # somehow get post response
-    "some okay response"
+def new(request):
+    "Deal with the POST thing for uploading UOS"
 
 
 run(reload=True)
