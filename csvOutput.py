@@ -36,6 +36,3 @@ class csvOutput:
         if code not in data:
             return None
         return data[code]
-
-a = csvOutput(["INFO1103"])
-a.printToCsv()
