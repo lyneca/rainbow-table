@@ -1,4 +1,4 @@
-from bottle import run, post, get, static_file, template, request
+from bottle import run, post, get, static_file, template, request, redirect
 import re
 import parse
 
@@ -90,10 +90,18 @@ def export_file():
 def query():
     code = request.GET.get("unitCode", None)
     getAssessments(code)
+    redirect("/")
 
 @post('/new')
 def new():
-    "Deal with the POST thing for uploading UOS"
+    code = request.forms.get("unitCode")
+    weight = request.forms.get("assessWeight")
+    date_due = request.forms.get("dateDue")
+    time_due = request.forms.get("timeDue")
+    assess_num = parse.numOfAssessments(code)
+    print(weight)
+    parse.addAssessment(code, {'assessment_number': assess_num, 'name': "", 'is_group': "No", 'weight': weight, 'due_string': date_due[:-1]+" "+time_due})
+    redirect("/")
 
 
 run(debug=True, reload=True)

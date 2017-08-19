@@ -3,7 +3,7 @@ class mdOutput:
         self.courseCodes = codes
 
     def printToMd(self):
-        outputFile = open("output.md", "w")
+        outputFile = open("templates/output.md", "w")
         outputFile.write("#Assessments\n")
         for i in self.courseCodes:
             assignments = self.getAssignments(i)

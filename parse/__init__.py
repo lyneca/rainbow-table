@@ -29,7 +29,6 @@ def export(course_code):
     data.close()
     data = open("data/data.py", 'w')
     globs['assessment'][course_code] = course
-    assessment = ''.join('{}{}'.format(key, val) for key, val in globs['assessment'].items())
     data.write("assessment = "+str(globs['assessment']))
     data.close()
 
@@ -38,6 +37,12 @@ def getAssessDict():
     empty = {}
     exec(data.read(), empty)
     return empty['assessment']
+
+def numOfAssessments(k):
+    unitsDict = getAssessDict()
+    if k in unitsDict:
+        return len(unitsDict[k])
+    return 0
 
 def numOfUnits():
     unitsDict = getAssessDict()
@@ -65,6 +70,19 @@ def getExamPercentage(num, unitsList):
         if i['due_string'] == "Exam Period":
             return i["weight"]
     return 0.00
+
+def addAssessment(course_code, assess):
+    data = open("data/data.py", 'r+')
+    globs = {}
+    exec(data.read(), globs)
+    data.close()
+    data = open("data/data.py", 'w')
+    if course_code in globs['assessment']:
+        globs['assessment'][course_code].append(assess)
+    else:
+        globs['assessment'][course_code] = [assess]
+    data.write("assessment = "+str(globs['assessment']))
+    data.close()
 
 # This stuff runs when you run this file like `python3 __init__.py` (but not when you import it)
 if __name__ == '__main__':
