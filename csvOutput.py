@@ -4,7 +4,7 @@ class csvOutput:
         self.courseCodes = codes
 
     def printToCsv(self):
-        outputFile = open("/templates/output.csv", "w")
+        outputFile = open("templates/output.csv", "w")
         writer = csv.writer(outputFile)
         writer.writerow(["Assessment Number", "Name", "Due", "Weighting", "Group"])
         for i in self.courseCodes:
