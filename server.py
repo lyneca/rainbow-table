@@ -1,15 +1,28 @@
 from bottle import run, post, get, static_file, template, request
 import re
 import parse
+import random
 import mdOutput as md
 import csvOutput as csv
+
+def lighten(x):
+    x = eval('0x' + x)
+    if 200 > x or x < 120:
+        x = random.randrange(120, 200)
+    return hex(x)[2:]
+
+def twos(x):
+    return (x[:2],x[2:4],x[4:])
+
 
 class Ass:
     def __init__(self, code, name, week):
         self.code = code
         self.name = name
         self.week = week
-        self.color = hex(hash(self.code))[2:8]
+        self.color = hex(abs(hash(self.code)))[2:8]
+        random.seed(self.color)
+        self.color = ''.join([lighten(x) for x in twos(self.color)])
 
     def __str__(self):
         return self.code + ' ' + self.name
@@ -124,6 +137,7 @@ def online():
 def query():
     code = request.GET.get("unitCode", None)
     getAssessments(code)
+    return index()
 
 @post('/new')
 def new():
