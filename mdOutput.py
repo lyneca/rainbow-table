@@ -29,5 +29,5 @@ class mdOutput:
             return None
         return data[code]
 
-a = pdfOutput(["INFO1103"])
-a.printToPdf()
+a = mdOutput(["INFO1103"])
+a.printToMd()
