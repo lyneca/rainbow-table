@@ -1,1 +1,2 @@
-# unihack-project
+# Rainbow Table
+Parse and organise assessment data
