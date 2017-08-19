@@ -25,14 +25,10 @@ def index():
     semester_weeks = 13
     stuff = {}
 
-<<<<<<< HEAD
     # Amount of units:
     stuff["num_units"] = str(amount_of_units)
 
-    # Test (next to Sunday)    
-=======
     # Test (next to Sunday)
->>>>>>> a87ea3651421f9cb74b1b2ccf2d20aa8724aca64
     stuff["test"] = ""
 
     # Units - Assessments Loaded

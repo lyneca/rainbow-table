@@ -42,6 +42,12 @@ def export(course_code):
     data.write("assessment = "+str(globs['assessment']))
     data.close()
 
+def getAssessDict():
+    data = open("data/data.py")
+    empty = {}
+    exec(data.read(), empty)
+    return empty['assessment']
+
 # This stuff runs when you run this file like `python3 __init__.py` (but not when you import it)
 if __name__ == '__main__':
     while True:
