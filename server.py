@@ -1,5 +1,8 @@
 from bottle import run, post, get, static_file, template
-#import parser
+import parse
+
+def getAssessments(course_code):
+    export(course_code)
 
 TEMPLATE_DIR = './templates'
 
@@ -22,7 +25,7 @@ def index():
     semester_weeks = 13
     stuff = {}
 
-    # Test (next to Sunday)    
+    # Test (next to Sunday)
     stuff["test"] = ""
 
     # Units - Assessments Loaded
