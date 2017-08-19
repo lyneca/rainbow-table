@@ -23,14 +23,15 @@ class mdOutput:
 
 
     def getAssignments(self, code):
+        ''' For when i thought we were saving as txt files
         f = open("data.txt");
         text = f.read()
         f.close()
         o = open("example.py", "w")
         o.write("assessment = "+text)
-        o.close()
-        import example
-        data = example.assessment
+        o.close()'''
+        from data import data
+        data = data.assessment
         if code not in data:
             return None
         return data[code]
