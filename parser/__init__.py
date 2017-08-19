@@ -25,4 +25,11 @@ def cusp(course_code):
     return dict_ds 
 
 if __name__ == '__main__':
-    pprint(cusp('INFO1103'))
+    units = [
+        'INFO1103',
+        'INFO1903',
+        'INFO1003',
+        'INFO1105'
+    ]
+    for unit in units:
+        pprint(cusp(unit))
