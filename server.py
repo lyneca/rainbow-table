@@ -72,7 +72,7 @@ def index():
                 if not w: continue
                 data['ass'].append(Ass(code, ass['name'], w))
     print(data)
-    return template(str(TEMPLATE_DIR+'/index_.html'), data)
+    return template(str(TEMPLATE_DIR+'/index.html'), data)
 
 # Add Assessment
 @get('/add')

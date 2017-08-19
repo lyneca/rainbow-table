@@ -1,229 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<link type='text/css' rel='stylesheet' href='global.css'>
-<style>
-</style>
-</head>
-<body>
+	<head>
+		<link type='text/css' rel='stylesheet' href='global.css'>
+	<style>
+	</style>
+	</head>
+	<body>
 
 <div style="padding-left:16px">
-  <h1>Rainbow Table</h1>
+<h1>Rainbow Table</h1>
 </div>
 
 <div class="topnav">
-  <a class="active" href="/">Home</a>
-  <a href="/import">Import Unit</a>
-  <a href="/add">Add Assessment</a>
-  <a href="/export">Export Planner</a>
+<a class="active" href="/">Home</a>
+<a href="/import">Import Unit</a>
+<a href="/add">Add Assessment</a>
+<a href="/export">Export Planner</a>
 </div>
 <table>
 % for i in range(int(num_units)):
-    <col width={{(100/int(num_units))}}%>
+<col width={{(100/int(num_units))}}%>
 % end
 <tr>
 %unit_loaded = Unit.split(",")
 % for i in range(int(num_units)):
-    <th>{{unit_loaded[i]}}</th>
+<th>{{unit_loaded[i]}}</th>
 % end
 </tr>
-% ass_loaded = assessments.split(",")
-% exam_perc = exams.split(",")
-% for i in range(int(num_units)):
-    <td>Assessments loaded {{ass_loaded[i]}}%<br/><span title="This is mouse over text!!!">Exam </span> {{exam_perc[i]}}%<br/>Textbooks</td>
-% end
 </tr>
 </table>
 
 <table>
-	<col width="9%">
-    <col width="13%">
-    <col width="13%">
-    <col width="13%">
-    <col width="13%">
-    <col width="13%">
-    <col width="13%">
-    <col width="13%">
-  <tr>
-    <th></th>
-    <th>Monday</th>
-    <th>Tuesday</th>
-    <th>Wednesday</th>
-    <th>Thursday</th>
-    <th>Friday</th>
-    <th>Saturday</th>
-    <th>Sunday{{test}}</th>
-  </tr>
-	<tr>
-    <th><span title="{{Week1}}">Week 1</span></th>
-    <td>31<br/>{{assessment1}}</td>
-    <td>1 August<br/>{{assessment2}}</td>
-    <td>2<br/>{{assessment3}}</td>
-    <td>3<br/>{{assessment4}}</td>
-    <td>4<br/>{{assessment5}}</td>
-    <td>5<br/>{{assessment6}}</td>
-    <td>6<<br/>{{assessment7}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week2}}">Week 2</span></th>
-    <td>7<br/>{{assessment8}}</td>
-    <td>8<br/>{{assessment9}}</td>
-    <td>9<br/>{{assessment10}}</td>
-    <td>10<br/>{{assessment11}}</td>
-    <td>11<br/>{{assessment12}}</td>
-    <td>12<br/>{{assessment13}}</td>
-    <td>13<br/>{{assessment14}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week3}}">Week 3</span></th>
-    <td>14<br/>{{assessment15}}</td>
-    <td>15<br/>{{assessment16}}</td>
-    <td>16<br/>{{assessment17}}</td>
-    <td>17<br/>{{assessment18}}</td>
-    <td>18<br/>{{assessment19}}</td>
-    <td>19<br/>{{assessment20}}</td>
-    <td>20<br/>{{assessment21}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week4}}">Week 4</span></th>
-    <td>21<br/>{{assessment22}}</td>
-    <td>22<br/>{{assessment23}}</td>
-    <td>23<br/>{{assessment24}}</td>
-    <td>24<br/>{{assessment25}}</td>
-    <td>25<br/>{{assessment26}}</td>
-    <td>26<br/>{{assessment27}}</td>
-    <td>27<br/>{{assessment28}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week5}}">Week 5</span></th>
-    <td>28<br/>{{assessment29}}</td>
-    <td>29<br/>{{assessment30}}</td>
-    <td>30<br/>{{assessment31}}</td>
-    <td>31<br/>{{assessment32}}</td>
-    <td>1 September</td>
-    <td>2<br/>{{assessment33}}</td>
-    <td>3<br/>{{assessment34}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week6}}">Week 6</span></th>
-    <td>4<br/>{{assessment35}}</td>
-    <td>5<br/>{{assessment36}}</td>
-    <td>6<br/>{{assessment37}}</td>
-    <td>7<br/>{{assessment38}}</td>
-    <td>8<br/>{{assessment39}}</td>
-    <td>9<br/>{{assessment40}}</td>
-    <td>10<br/>{{assessment41}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week7}}">Week 7</span></th>
-    <td>11<br/>{{assessment42}}</td>
-    <td>12<br/>{{assessment43}}</td>
-    <td>13<br/>{{assessment44}}</td>
-    <td>14<br/>{{assessment45}}</td>
-    <td>15<br/>{{assessment46}}</td>
-    <td>16<br/>{{assessment47}}</td>
-    <td>17<br/>{{assessment48}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week8}}">Week 8</span></th>
-    <td>18<br/>{{assessment49}}</td>
-    <td>19<br/>{{assessment50}}</td>
-    <td>20<br/>{{assessment51}}</td>
-    <td>21<br/>{{assessment52}}</td>
-    <td>22<br/>{{assessment53}}</td>
-    <td>23<br/>{{assessment54}}</td>
-    <td>24<br/>{{assessment55}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{MIDSEM}}">MIDSEM</span></th>
-    <td>25<br/>{{assessment56}}</td>
-    <td>26<br/>{{assessment57}}</td>
-    <td>27<br/>{{assessment58}}</td>
-    <td>28<br/>{{assessment59}}</td>
-    <td>29<br/>{{assessment60}}</td>
-    <td>30<br/>{{assessment61}}</td>
-    <td>1 October</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week9}}">Week 9</span></th>
-    <td>2<br/>{{assessment62}}</td>
-    <td>3<br/>{{assessment63}}</td>
-    <td>4<br/>{{assessment64}}</td>
-    <td>5<br/>{{assessment65}}</td>
-    <td>6<br/>{{assessment66}}</td>
-    <td>7<br/>{{assessment67}}</td>
-    <td>8<br/>{{assessment68}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week10}}">Week 10</span></th>
-    <td>9<br/>{{assessment69}}</td>
-    <td>10<br/>{{assessment70}}</td>
-    <td>11<br/>{{assessment71}}</td>
-    <td>12<br/>{{assessment72}}</td>
-    <td>13<br/>{{assessment73}}</td>
-    <td>14<br/>{{assessment74}}</td>
-    <td>15<br/>{{assessment75}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week11}}">Week 11</span></th>
-    <td>16<br/>{{assessment76}}</td>
-    <td>17<br/>{{assessment77}}</td>
-    <td>18<br/>{{assessment78}}</td>
-    <td>19<br/>{{assessment79}}</td>
-    <td>20<br/>{{assessment80}}</td>
-    <td>21<br/>{{assessment81}}</td>
-    <td>22<br/>{{assessment82}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week12}}">Week 12</span></th>
-    <td>23<br/>{{assessment83}}</td>
-    <td>24<br/>{{assessment84}}</td>
-    <td>25<br/>{{assessment85}}</td>
-    <td>26<br/>{{assessment86}}</td>
-    <td>27<br/>{{assessment87}}</td>
-    <td>28<br/>{{assessment88}}</td>
-    <td>29<br/>{{assessment89}}</td>
-  </tr>
-  <tr>
-    <th><span title="{{Week13}}">Week 13</span></th>
-    <td>30<br/>{{assessment90}}</td>
-    <td>31<br/>{{assessment91}}</td>
-    <td>1 November<br/>{{assessment92}}</td>
-    <td>2<br/>{{assessment93}}</td>
-    <td>3<br/>{{assessment94}}</td>
-    <td>4<br/>{{assessment95}}</td>
-    <td>5<br/>{{assessment96}}</td>
-  </tr>
-  <tr>
-    <th>STUVAC</th>
-    <td>6</td>
-    <td>7</td>
-    <td>8</td>
-    <td>9</td>
-    <td>10</td>
-    <td>11</td>
-    <td>12</td>
-  </tr>
-  <tr>
-    <th>Exams 1</th>
-    <td>13</td>
-    <td>14</td>
-    <td>15</td>
-    <td>16</td>
-    <td>17</td>
-    <td>18</td>
-    <td>19</td>
-  </tr>
-  <tr>
-    <th>Exams 2</th>
-    <td>20</td>
-    <td>21</td>
-    <td>22</td>
-    <td>23</td>
-    <td>24</td>
-    <td>25</td>
-    <td>26</td>
-  </tr>
+<col width="9%">
+% for week in weeks:
+<tr>
+<th><span title="{{week}}">{{week}}</span></th>
+<td>
+	% for a in ass:
+	% if 'm' not in week and ' ' in week:
+	% if int(week.split()[1]) == int(a.week):
+	<div class="assessment" style="background-color: {{a.color}}">{{a}}</div>
+	% end
+	% end
+	% end
+</td>
+</tr>
+% end
+<!--
+  Week 1
+  Week 2
+  Week 3
+  Week 4
+  Week 5
+  Week 6
+  Week 7
+  Week 8
+  Midsem
+  Week 9
+  Week 10
+  Week 11
+  Week 12
+  Week 13
+  Stuvac
+  Exams I
+  Exams II
+-->
 </table>
 
 </body>
