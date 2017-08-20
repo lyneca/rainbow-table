@@ -1,3 +1,8 @@
+data/data.py
+templates/output.csv
+templates/output.md
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
