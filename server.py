@@ -5,6 +5,9 @@ import random
 import mdOutput as md
 import csvOutput as csv
 
+def pad(s, n):
+    return '0'*(n-len(s))+s
+
 def lighten(x):
     x = eval('0x' + x)
     if 200 > x or x < 120:
@@ -16,10 +19,11 @@ def twos(x):
 
 
 class Ass:
-    def __init__(self, code, name, week):
+    def __init__(self, code, name, week, weight):
         self.code = code
         self.name = name
         self.week = week
+        self.weight = weight.split('.')[0]
         self.color = hex(abs(hash(self.code)))[2:8]
         random.seed(self.color)
         self.color = ''.join([lighten(x) for x in twos(self.color)])
@@ -61,7 +65,7 @@ def index():
     data['weeks'][14] = "STUVAC"
     data['weeks'][15] = "Exam Week"
     data['weeks'][16] = "Exam Week"
-
+    data['pad'] = pad
     flag = 0
     for i in range(17):
         if type(data['weeks'][i]) is not int:
@@ -101,7 +105,7 @@ def index():
                     i += 1
                 w = get_week(ass['due_string'])
                 if not w: continue
-                data['ass'].append(Ass(code, ass['name'], w))
+                data['ass'].append(Ass(code, ass['name'], w, ass['weight']))
     print(data)
     return template(str(TEMPLATE_DIR+'/index.html'), data)
 
@@ -170,4 +174,4 @@ def new():
     redirect("/")
 
 
-run(debug=True, reload=True)
+run(debug=True, reload=True, port=8080)
