@@ -74,12 +74,30 @@ def index():
         data['weeks'][i] = "Week %s" % (i + 1 - flag)
 
     # Assessment dates being added in?
-    assess = parse.getAssessDict()
-    string = ""
-    for i in assess:
+    amount_of_units = parse.numOfUnits()
+    unitsList = parse.getUnitsList()
+    unitsDict = parse.getAssessDict()
+    string = ''
+    for i in unitsDict:
         string += i+","
-    data['Unit'] = string
+    data["Unit"] = string
+
+    # Units - Assessments Loaded
+    string = ""
+    for i in range(amount_of_units):
+        percent = str(parse.getUnitPercentage(i, unitsList))
+        string += "%s," % percent
+    data["Asses"] = string
+
+    # Units - Exams
+    string = ""
+    for i in range(amount_of_units):
+        percent = str(parse.getExamPercentage(i, unitsList))
+        string += "%s," % percent
+    data["Exam"] = string
+
     # Assessment dates being added in?
+    assess = parse.getAssessDict()
     for code in assess:
         for ass in assess[code]:
             if ass['due_string'] != "Multiple Weeks":
