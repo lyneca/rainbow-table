@@ -1,5 +1,9 @@
 body {
   margin:0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
 }
 
 .container {
@@ -44,7 +48,6 @@ input[type=file]{
 }
 
 table {
-  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
