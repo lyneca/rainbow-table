@@ -33,9 +33,15 @@
 
 <table>
 <col width="9%">
+% m = max([len([a for a in ass if str(a.week) in week]) for week in weeks])
+% m = 15
 % for week in weeks:
-<tr>
-<th><span title="{{week}}">{{week}}</span></th>
+% n = len([a for a in ass if str(a.week) in week])
+% n = m-n
+% c = 'ff' + pad(hex(n * 16)[2:], 2) * 2
+ 
+<tr style="background-color: #{{c}}">
+	<th><span title="{{week}}" >{{week}}</span></th>
 <td>
 	% for a in ass:
 	% if 'm' not in week and ' ' in week:
