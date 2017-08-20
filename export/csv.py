@@ -3,10 +3,9 @@ class csvOutput:
     def __init__(self, codes):
         self.courseCodes = codes
 
-    def printToCsv(self):
-        outputFile = open("templates/output.csv", "w")
-        writer = csv.writer(outputFile)
-        writer.writerow(["Assessment Number", "Name", "Due", "Weighting", "Group"])
+    def export(self):
+        outputFile = open("output.csv", "x")
+        writerow(["Assessment Number", "Name", "Due", "Weighting", "Group"])
         for i in self.courseCodes:
             assignments = self.getAssignments(i)
             if assignments == None:

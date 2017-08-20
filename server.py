@@ -2,8 +2,8 @@ from bottle import run, post, get, static_file, template, request, redirect
 import re
 import parse
 import random
-import mdOutput as md
-import csvOutput as csv
+import export.md as markdown
+import export.csv as csv
 
 def pad(s, n):
     return '0'*(n-len(s))+s
@@ -124,7 +124,7 @@ def import_unit():
 def import_unit():
     codes = parse.getAssessDict() # List of unit codes
     csvFormat = csv.csvOutput(codes)
-    csvFormat.printToCsv()
+    csvFormat.export()
     mdFormat = md.mdOutput(codes)
     mdFormat.printToMd()
     return static_file('export.html', root=TEMPLATE_DIR)
