@@ -15,7 +15,7 @@ class CSVExporter:
     def export(self):
         if not os.path.exists("output.csv"): open("output.csv", 'x').close()
         with open("output.csv") as output_file:
-            output_file.write(self.csvify(array))
+            output_file.write(self.csvify(self.lines))
 
     def add_row(self, row):
         self.lines.append(row)
