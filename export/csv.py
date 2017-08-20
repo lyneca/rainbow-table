@@ -1,37 +1,34 @@
-import csv
-class csvOutput:
-    def __init__(self, codes):
-        self.courseCodes = codes
+class CSVExporter:
+    def __init__(self, assessments):
+        self.lines = []
+        self.add_row(["Assessment Number", "Name", "Due", "Weighting", "Group"])
+        for code in assessments:
+            assessment = assessments[code]
+            self.add_row([
+                assessment['assessment_number'],
+                assessment['name'],
+                self.get_due_string(assessment['due_string'])
+                assessment['weight'],
+                assessment['is_group']
+            ])
 
     def export(self):
-        outputFile = open("output.csv", "x")
-        writerow(["Assessment Number", "Name", "Due", "Weighting", "Group"])
-        for i in self.courseCodes:
-            assignments = self.getAssignments(i)
-            if assignments == None:
-                return None
-            for j in assignments:
-                if j['due_string'] == 'Exam Period':
-                    j['due_string'] = 'in the Exam Period'
-                elif j['due_string'] == 'Multiple Weeks':
-                    j['due_string'] = 'over multiple weeks'
-                else:
-                    j['due_string'] = 'on '+j['due_string']
-                writer.writerow([str(j['assessment_number']), j['name'], j['due_string'], j['weight'], j['is_group']])
-        outputFile.close()
+        if not os.path.exists("output.csv"): open("output.csv", 'x').close()
+        with open("output.csv") as output_file:
+            output_file.write(self.csvify(array))
 
+    def add_row(self, row):
+        self.lines.append(row)
 
-
-
-    def getAssignments(self, code):
-        '''f = open("data.txt");
-        text = f.read()
-        f.close()
-        o = open("example.py", "w")
-        o.write("assessment = "+text)
-        o.close()'''
-        from data import data
-        data = data.assessment
-        if code not in data:
-            return None
-        return data[code]
+    @staticmethod
+    def csvify(arr):
+        return '\n'.join([','.join([str(elem) for elem in row]) for row in lines])
+            
+    @staticmethod
+    def get_due_string(string):
+        if due_string == 'Exam Period':
+            return 'in the Exam Period'
+        elif due_string == 'Multiple Weeks':
+            return 'over multiple weeks'
+        else:
+            return 'on ' + due_string
