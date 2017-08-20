@@ -24,8 +24,13 @@
 % end
 <tr>
 %unit_loaded = Unit.split(",")
+%unit_exam = Exam.split(",")
+%unit_assess = Asses.split(",")
 % for i in range(int(num_units)):
-<th>{{unit_loaded[i]}}</th>
+<th>
+{{unit_loaded[i]}}
+<p>Assessment weight: <br>{{unit_assess[i]}}%</p>
+<p>Exam weight: <br>{{unit_exam[i]}}%</p></th>
 % end
 </tr>
 </tr>
