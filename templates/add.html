@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link type='text/css' rel='stylesheet' href='global.css'>
+</head>
+<body>
+
+<div style="padding-left:16px">
+  <h1>Rainbow Table</h1>
+</div>
+
+<div class="topnav">
+  <a href="/">Home</a>
+  <a href="/import">Import Unit</a>
+  <a class="active" href="/add">Add Assessment</a>
+  <a href="/export">Export Planner</a>
+</div>
+
+<h3 style="padding-left:16px">Manual assessment entry</h3>
+
+<div class="container">
+  <form action="/new", method="POST">
+    <label for="unit">Unit code</label>
+    <input type="text" id="unit" name="unitCode" placeholder="e.g. MATH1002">
+
+		<label for="name">Assessment name</label>
+		<input type="text" id="name" name="assName" placeholder="e.g. Quiz 1">
+
+    <label for="weight">Assessment weight</label>
+    <input type="text" id="weight" name="assessWeight" placeholder="e.g. 10%">
+
+    <label for="date">Date due (or week due if date unknown)</label>
+    <input type="text" id="date" name="dateDue" placeholder="e.g. Week 4 (Monday)">
+
+	<label for="time">Time due (optional)</label>
+    <input type="text" id="time" name="timeDue" placeholder="e.g. 6am">
+<br/>
+<input type="submit">
+
+  </form>
+</div>
+
+</body>
+</html>
