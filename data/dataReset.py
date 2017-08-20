@@ -1,5 +1,2 @@
-def reset():
-    data = open("data.py", 'w')
-    data.write("assessment = {}")
-    data.close()
-reset()
+with open("data.py", 'w') as f:
+    f.write('assessment = {}')
