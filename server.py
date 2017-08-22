@@ -42,7 +42,7 @@ def get_week(s):
         return None
     return int(finds.groups()[0])
 
-def getAssessments(course_code):
+def get_assessments(course_code):
     parse.export(course_code)
 
 
@@ -64,7 +64,7 @@ def css():
 def index():
     data = {'weeks': [x for x in range(17)], 'ass': []}
 
-    data['num_units'] = parse.numOfUnits()
+    data['num_units'] = parse.num_of_units()
     data['weeks'][8] = "Midterm Break"
     data['weeks'][14] = "STUVAC"
     data['weeks'][15] = "Exam Week"
@@ -78,30 +78,30 @@ def index():
         data['weeks'][i] = "Week %s" % (i + 1 - flag)
 
     # Assessment dates being added in?
-    amount_of_units = parse.numOfUnits()
-    unitsList = parse.getUnitsList()
-    unitsDict = parse.getAssessDict()
+    amount_of_units = parse.num_of_units()
+    units_list = parse.get_units_list()
+    units_dict = parse.get_assess_dict()
     string = ''
-    for i in unitsDict:
+    for i in units_dict:
         string += i+","
     data["Unit"] = string
 
     # Units - Assessments Loaded
     string = ""
     for i in range(amount_of_units):
-        percent = str(parse.getUnitPercentage(i, unitsList))
+        percent = str(parse.get_unit_percentage(i, units_list))
         string += "%s," % percent
     data["Asses"] = string
 
     # Units - Exams
     string = ""
     for i in range(amount_of_units):
-        percent = str(parse.getExamPercentage(i, unitsList))
+        percent = str(parse.get_exam_percentage(i, units_list))
         string += "%s," % percent
     data["Exam"] = string
 
     # Assessment dates being added in?
-    assess = parse.getAssessDict()
+    assess = parse.get_assess_dict()
     for code in assess:
         for ass in assess[code]:
             if ass['due_string'] != "Multiple Weeks":
@@ -110,7 +110,6 @@ def index():
                 w = get_week(ass['due_string'])
                 if not w: continue
                 data['ass'].append(Ass(code, ass['name'], w, ass['weight']))
-    print(data)
     return template(str(TEMPLATE_DIR+'/index.html'), data)
 
 # Add Assessment
@@ -130,20 +129,20 @@ def export():
 # Export Planner
 @get('/export/csv')
 def export_csv():
-    exporter = csv.CSVExporter(parse.getAssessDict())
+    exporter = csv.CSVExporter(parse.get_assess_dict())
     exporter.export('export/output.csv')
     return static_file('output.csv', root=EXPORT_DIR)
 
 
 @get('/export/md')
 def export_md():
-    exporter = md.MDExporter(parse.getAssessDict())
+    exporter = md.MDExporter(parse.get_assess_dict())
     exporter.export('export/output.md')
     return static_file('output.md', root=EXPORT_DIR)
 
 @get('/export/pdf')
 def export_pdf():
-    exporter = pdf.PDFExporter(parse.getAssessDict())
+    exporter = pdf.PDFExporter(parse.get_assess_dict())
     exporter.export('export/output.pdf')
     return static_file('output.pdf', root=EXPORT_DIR)
 
@@ -176,7 +175,7 @@ def online():
 @get('/query')
 def query():
     code = request.GET.get("unitCode", None)
-    getAssessments(code)
+    get_assessments(code)
     redirect("/")
 
 
@@ -187,8 +186,8 @@ def new():
     weight = request.forms.get("assessWeight")
     date_due = request.forms.get("dateDue")
     time_due = request.forms.get("timeDue")
-    assess_num = parse.numOfAssessments(code)
-    parse.addAssessment(code, {'assessment_number': assess_num, 'name': name, 'is_group': "No", 'weight': weight, 'due_string': date_due[:-1]+" "+time_due})
+    assess_num = parse.num_of_assessments(code)
+    parse.add_assessment(code, {'assessment_number': assess_num, 'name': name, 'is_group': "_no", 'weight': weight, 'due_string': date_due[:-1]+" "+time_due})
     redirect("/")
 
 

@@ -1,6 +1,4 @@
 data/data.py
-templates/output.csv
-templates/output.md
 export/output.*
 
 
