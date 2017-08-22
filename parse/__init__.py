@@ -31,46 +31,46 @@ def export(course_code):
     data.write("assessment = "+str(globs['assessment']))
     data.close()
 
-def getAssessDict():
+def get_assess_dict():
     data = open("data/data.py")
     empty = {}
     exec(data.read(), empty)
     return empty['assessment']
 
-def numOfAssessments(k):
-    unitsDict = getAssessDict()
-    if k in unitsDict:
-        return len(unitsDict[k])
+def num_of_assessments(k):
+    units_dict = get_assess_dict()
+    if k in units_dict:
+        return len(units_dict[k])
     return 0
 
-def numOfUnits():
-    unitsDict = getAssessDict()
+def num_of_units():
+    units_dict = get_assess_dict()
     num = 0
-    for i in unitsDict.keys():
+    for i in units_dict.keys():
         num += 1
     return num
 
-def getUnitsList():
-    unitsDict = getAssessDict()
-    unitsList = []
-    for i in unitsDict.keys():
-        unitsList.append(unitsDict[i])
-    return unitsList
+def get_units_list():
+    units_dict = get_assess_dict()
+    units_list = []
+    for i in units_dict.keys():
+        units_list.append(units_dict[i])
+    return units_list
 
-def getUnitPercentage(num, unitsList):
+def get_unit_percentage(num, units_list):
     percentage = 0
-    for i in unitsList[num]:
-        if i['due_string'] != "Multiple Weeks":
+    for i in units_list[num]:
+        if i['due_string'] != "_multiple _weeks":
             percentage += float(i['weight'])
     return percentage
 
-def getExamPercentage(num, unitsList):
-    for i in unitsList[num]:
+def get_exam_percentage(num, units_list):
+    for i in units_list[num]:
         if i['due_string'] == "Exam Period":
             return i["weight"]
     return 0.00
 
-def addAssessment(course_code, assess):
+def add_assessment(course_code, assess):
     data = open("data/data.py", 'r+')
     globs = {}
     exec(data.read(), globs)
