@@ -2,8 +2,13 @@ from bottle import run, post, get, static_file, template, request, redirect
 import re
 import parse
 import random
-import export.md as markdown
+import export.md as md
 import export.csv as csv
+import export.pdf as pdf 
+
+TEMPLATE_DIR = './templates'
+EXPORT_DIR = './export'
+
 
 def pad(s, n):
     return '0'*(n-len(s))+s
@@ -40,7 +45,6 @@ def get_week(s):
 def getAssessments(course_code):
     parse.export(course_code)
 
-TEMPLATE_DIR = './templates'
 
 
 """
@@ -119,15 +123,29 @@ def entry_page():
 def import_unit():
     return static_file('import.html', root=TEMPLATE_DIR)
 
-# Export Planner
 @get('/export')
-def import_unit():
-    codes = parse.getAssessDict() # List of unit codes
-    csvFormat = csv.csvOutput(codes)
-    csvFormat.export()
-    mdFormat = md.mdOutput(codes)
-    mdFormat.printToMd()
+def export():
     return static_file('export.html', root=TEMPLATE_DIR)
+
+# Export Planner
+@get('/export/csv')
+def export_csv():
+    exporter = csv.CSVExporter(parse.getAssessDict())
+    exporter.export('export/output.csv')
+    return static_file('output.csv', root=EXPORT_DIR)
+
+
+@get('/export/md')
+def export_md():
+    exporter = md.MDExporter(parse.getAssessDict())
+    exporter.export('export/output.md')
+    return static_file('output.md', root=EXPORT_DIR)
+
+@get('/export/pdf')
+def export_pdf():
+    exporter = pdf.PDFExporter(parse.getAssessDict())
+    exporter.export('export/output.pdf')
+    return static_file('output.pdf', root=EXPORT_DIR)
 
 # Is not linked currently!
 # DO NOT MAKE LINKED!!!

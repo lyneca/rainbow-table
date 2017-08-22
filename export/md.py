@@ -1,13 +1,14 @@
 import os
+from .base import Exporter
 
 class MDExporter(Exporter):
     def __init__(self, assessments):
-        super().__init__(self, assessments)
         self.lines = []
+        super().__init__(assessments)
 
     def format(self):
         self._add_header('Semester Assessment Timetable')
-        if not os.path.exists("output.csv"): open("output.csv", 'x').close()
+        if not os.path.exists("output.md"): open("output.md", 'x').close()
         for code in self.assessments:
             self._add_header(code, 2)
             table = [['#', 'Name', 'Weight', 'Due', 'Group']]
@@ -19,11 +20,15 @@ class MDExporter(Exporter):
                     assessment['due_string'],
                     assessment['is_group']
                 ])
-                self._add_table(table)
+            self._add_table(table)
 
-    def export(self):
-        with open("output.md", 'x') as output_file:
-            output_file.write('\n'.join(self._lines))
+    def as_text(self):
+        return '\n'.join(self.lines)
+
+    def export(self, path):
+        if not os.path.exists(path): open(path, 'x').close()
+        with open(path, 'w') as output_file:
+            output_file.write('\n'.join(self.lines))
 
     def _add_header(self, text, level=1):
         self._add_line('#' * level + ' ' + text)
