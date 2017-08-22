@@ -1,5 +1,5 @@
 body {
-  margin:0;
+	margin: 0;
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -8,8 +8,8 @@ h1 {
 
 .container {
   border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
+  background-color: #ffffff;
+  padding: 10px;
 }
 
 input[type=submit] {
@@ -76,6 +76,10 @@ td, th {
   font-size: 17px;
 }
 
+.spacer {
+	height:10px;
+}
+
 .topnav a:hover {
   background-color: #ddd;
   color: black;
@@ -86,8 +90,12 @@ td, th {
   background-color: #333;
 }
 
+tr:nth-child(odd) {
+  background-color: #efefef;
+}
+
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #e6e6e6;
 }
 
 .assessment {

@@ -11,13 +11,13 @@
 <div style="padding-left:16px">
 <h1>Rainbow Table</h1>
 </div>
-
 <div class="topnav">
 <a class="active" href="/">Home</a>
 <a href="/import">Import Unit</a>
 <a href="/add">Add Assessment</a>
 <a href="/export">Export Planner</a>
 </div>
+<div class="container">
 <table>
 % for i in range(int(num_units)):
 <col width={{(100/int(num_units))}}%>
@@ -35,15 +35,18 @@
 </tr>
 </tr>
 </table>
-
+<div class='spacer'></div>
 <table>
 <col width="9%">
-% m = max([len([a for a in ass if str(a.week) in week]) for week in weeks])
-% m = 15
+% m = max([sum([int(a.weight.split('.')[0]) for a in ass if str(a.week) in week]) for week in weeks])
 % for week in weeks:
-% n = len([a for a in ass if str(a.week) in week])
-% n = m-n
-% c = 'ff' + pad(hex(n * 16)[2:], 2) * 2
+% n = sum([int(a.weight.split('.')[0]) for a in ass if str(a.week) in week])
+% c = ''
+{{m}} {{n}}
+% n = (m-n)/m
+{{hex(round(n*255))}}
+% c = 'ff' + pad(hex(round(n*256))[2:], 2) * 2
+{{c}} |
  
 <tr style="background-color: #{{c}}">
 	<th><div title="{{week}}" >{{week}}</div></th>
@@ -79,5 +82,6 @@
 -->
 </table>
 
+</div>
 </body>
 </html>
