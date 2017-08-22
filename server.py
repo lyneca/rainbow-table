@@ -110,7 +110,6 @@ def index():
                 w = get_week(ass['due_string'])
                 if not w: continue
                 data['ass'].append(Ass(code, ass['name'], w, ass['weight']))
-    print(data)
     return template(str(TEMPLATE_DIR+'/index.html'), data)
 
 # Add Assessment
