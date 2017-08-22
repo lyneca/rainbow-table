@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
 		<link type='text/css' rel='stylesheet' href='global.css'>
 	<style>
 	</style>
@@ -10,36 +11,50 @@
 <div style="padding-left:16px">
 <h1>Rainbow Table</h1>
 </div>
-
 <div class="topnav">
 <a class="active" href="/">Home</a>
 <a href="/import">Import Unit</a>
 <a href="/add">Add Assessment</a>
 <a href="/export">Export Planner</a>
 </div>
+<div class="container">
 <table>
 % for i in range(int(num_units)):
 <col width={{(100/int(num_units))}}%>
 % end
 <tr>
 %unit_loaded = Unit.split(",")
+%unit_exam = Exam.split(",")
+%unit_assess = Asses.split(",")
 % for i in range(int(num_units)):
-<th>{{unit_loaded[i]}}</th>
+<th>
+{{unit_loaded[i]}}
+<p>Assessment weight: <br>{{unit_assess[i]}}%</p>
+<p>Exam weight: <br>{{unit_exam[i]}}%</p></th>
 % end
 </tr>
 </tr>
 </table>
-
+<div class='spacer'></div>
 <table>
 <col width="9%">
+% m = max([sum([int(a.weight.split('.')[0]) for a in ass if str(a.week) in week]) for week in weeks])
 % for week in weeks:
-<tr>
-<th><span title="{{week}}">{{week}}</span></th>
+% n = sum([int(a.weight.split('.')[0]) for a in ass if str(a.week) in week])
+% c = ''
+{{m}} {{n}}
+% n = (m-n)/m
+{{hex(round(n*255))}}
+% c = 'ff' + pad(hex(round(n*256))[2:], 2) * 2
+{{c}} |
+ 
+<tr style="background-color: #{{c}}">
+	<th><div title="{{week}}" >{{week}}</div></th>
 <td>
 	% for a in ass:
 	% if 'm' not in week and ' ' in week:
 	% if int(week.split()[1]) == int(a.week):
-	<div class="assessment" style="background-color: #{{a.color}}">{{a}}</div>
+	<div class="assessment" style="background-color: #{{a.color}}">{{a}} ({{a.weight}}%)</div>
 	% end
 	% end
 	% end
@@ -67,5 +82,6 @@
 -->
 </table>
 
+</div>
 </body>
 </html>
