@@ -83,25 +83,27 @@ def index():
     units_dict = parse.get_assess_dict()
     string = ''
     for i in units_dict:
-        string += i+","
+        string += i+";"
     data["Unit"] = string
 
     # Units - Assessments Loaded
     string = ""
     for i in range(amount_of_units):
         percent = str(parse.get_unit_percentage(i, units_list))
-        string += "%s," % percent
+        string += "%s;" % percent
     data["Asses"] = string
 
     # Units - Exams
     string = ""
     for i in range(amount_of_units):
         percent = str(parse.get_exam_percentage(i, units_list))
-        string += "%s," % percent
+        string += "%s;" % percent
     data["Exam"] = string
 
     # Assessment dates being added in?
     assess = parse.get_assess_dict()
+    multiple_weeks_name = ""
+    multiple_weeks_weight = ""
     for code in assess:
         for ass in assess[code]:
             if ass['due_string'] != "Multiple Weeks":
@@ -110,6 +112,14 @@ def index():
                 w = get_week(ass['due_string'])
                 if not w: continue
                 data['ass'].append(Ass(code, ass['name'], w, ass['weight']))
+            else:
+                if ass['name']:
+                    multiple_weeks_name += "%s," % ass['name']
+                    multiple_weeks_weight += "%s," % ass['weight']
+        multiple_weeks_name += ";"
+        multiple_weeks_weight += ";"
+    data["Multiple_name"] = multiple_weeks_name
+    data["Multiple_weight"] = multiple_weeks_weight
     return template(str(TEMPLATE_DIR+'/index.html'), data)
 
 # Add Assessment

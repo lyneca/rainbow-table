@@ -23,9 +23,11 @@
 <col width={{(100/int(num_units))}}%>
 % end
 <tr>
-%unit_loaded = Unit.split(",")
-%unit_exam = Exam.split(",")
-%unit_assess = Asses.split(",")
+%unit_loaded = Unit.split(";")
+%unit_exam = Exam.split(";")
+%unit_assess = Asses.split(";")
+%multi_names = Multiple_name.split(";")
+%multi_weight = Multiple_weight.split(";")
 % for i in range(int(num_units)):
 <th>
 {{unit_loaded[i]}}
@@ -33,6 +35,16 @@
 <p>Exam weight: <br>{{unit_exam[i]}}%</p></th>
 % end
 </tr>
+<tr>
+% for i in range(int(num_units)):
+<td>
+% multi_names[i] = multi_names[i].split(",")
+% multi_weight[i] = multi_weight[i].split(",")
+% for j in range(len(multi_names[i])-1):
+<p>{{multi_names[i][j]}}: <br>{{multi_weight[i][j]}}%</p>
+% end
+</td>
+%end
 </tr>
 </table>
 <div class='spacer'></div>
