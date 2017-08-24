@@ -42,11 +42,8 @@
 % for week in weeks:
 % n = sum([int(a.weight.split('.')[0]) for a in ass if str(a.week) in week])
 % c = ''
-{{m}} {{n}}
 % n = (m-n)/m
-{{hex(round(n*255))}}
 % c = 'ff' + pad(hex(round(n*256))[2:], 2) * 2
-{{c}} |
  
 <tr style="background-color: #{{c}}">
 	<th><div title="{{week}}" >{{week}}</div></th>
