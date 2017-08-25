@@ -4,11 +4,10 @@ import parse
 import random
 import export.md as md
 import export.csv as csv
-import export.pdf as pdf 
+import export.pdf as pdf
 
 TEMPLATE_DIR = './templates'
 EXPORT_DIR = './export'
-
 
 def pad(s, n):
     return '0'*(n-len(s))+s
@@ -20,7 +19,7 @@ def lighten(x):
     return hex(x)[2:]
 
 def twos(x):
-    return (x[:2],x[2:4],x[4:])
+    return (x[:2], x[2:4], x[4:])
 
 
 class Ass:
@@ -108,7 +107,8 @@ def index():
                 if i in data['weeks']:
                     i += 1
                 w = get_week(ass['due_string'])
-                if not w: continue
+                if not w:
+                    continue
                 data['ass'].append(Ass(code, ass['name'], w, ass['weight']))
     return template(str(TEMPLATE_DIR+'/index.html'), data)
 
