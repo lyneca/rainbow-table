@@ -23,11 +23,9 @@
 <col width={{(100/int(num_units))}}%>
 % end
 <tr>
-%unit_loaded = Unit.split(";")
-%unit_exam = Exam.split(";")
-%unit_assess = Asses.split(";")
-%multi_names = Multiple_name.split(";")
-%multi_weight = Multiple_weight.split(";")
+%unit_loaded = Unit.split(",")
+%unit_exam = Exam.split(",")
+%unit_assess = Asses.split(",")
 % for i in range(int(num_units)):
 <th>
 {{unit_loaded[i]}}
@@ -35,16 +33,6 @@
 <p>Exam weight: <br>{{unit_exam[i]}}%</p></th>
 % end
 </tr>
-<tr>
-% for i in range(int(num_units)):
-<td>
-% multi_names[i] = multi_names[i].split(",")
-% multi_weight[i] = multi_weight[i].split(",")
-% for j in range(len(multi_names[i])-1):
-<p>{{multi_names[i][j]}}: <br>{{multi_weight[i][j]}}%</p>
-% end
-</td>
-%end
 </tr>
 </table>
 <div class='spacer'></div>
@@ -54,8 +42,12 @@
 % for week in weeks:
 % n = sum([int(a.weight.split('.')[0]) for a in ass if str(a.week) in week])
 % c = ''
+% if m > 0:
 % n = (m-n)/m
 % c = 'ff' + pad(hex(round(n*256))[2:], 2) * 2
+% else:
+% c = ''
+% end
  
 <tr style="background-color: #{{c}}">
 	<th><div title="{{week}}" >{{week}}</div></th>
