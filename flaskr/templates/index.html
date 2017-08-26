@@ -9,66 +9,17 @@
 {% block body %}
     <div class="container">
     <table>
-        {% for i in range(int(num_units)): %}
-            <col width={{(100/int(num_units))}}%>
+        {% for i in range(data.num_units): %}
+            <col width={{(100/data.num_units)}}>
         {% endfor %}
         <tr>
-            {% unit_loaded = Unit.split(",") %}
-            {% unit_exam = Exam.split(",") %}
-            {% unit_assess = Asses.split(",") %}
-            {% for i in range(int(num_units)): %}
+            {% for i in range(data.num_units): %}
                 <th>
-                    {{unit_loaded[i]}}
-                    <p>Assessment weight: <br>{{unit_assess[i]}}%</p>
-                    <p>Exam weight: <br>{{unit_exam[i]}}%</p>
+                    {{data.unit_loaded[i]}}
+                    <p>Assessment weight: <br>{{data.unit_assess[i]}}%</p>
+                    <p>Exam weight: <br>{{data.unit_exam[i]}}%</p>
                 </th>
             {% endfor %}
         </tr>
-    </table>
-    <div class='spacer'></div>
-    <table><col width="9%">
-    {% m = max([sum([int(a.weight.split('.')[0]) for a in ass if str(a.week) in week]) for week in weeks]) %}
-    {% for week in weeks: %}
-        {% n = sum([int(a.weight.split('.')[0]) for a in ass if str(a.week) in week]) %}
-        {% c = '' %}
-        {% if m > 0: %}
-        {% n = (m-n)/m %}
-            {% c = 'ff' + pad(hex(round(n*256))[2:], 2) * 2 %}
-        {% else: %}
-            {% c = '' %}
-        {% endif %}
-     
-        <tr style="background-color: #{{c}}">
-	        <th><div title="{{week}}" >{{week}}</div></th>
-            <td>
-            {% for a in ass: %}
-                {% if 'm' not in week and ' ' in week: %}
-                    {% if int(week.split()[1]) == int(a.week): %}
-                        <div class="assessment" style="background-color: #{{a.color}}">{{a}} ({{a.weight}}%)</div>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-            </td>
-        </tr>
-    {% endfor %}
-    <!--
-      Week 1
-      Week 2
-      Week 3
-      Week 4
-      Week 5
-      Week 6
-      Week 7
-      Week 8
-      Midsem
-      Week 9
-      Week 10
-      Week 11
-      Week 12
-      Week 13
-      Stuvac
-      Exams I
-      Exams II
-    -->
     </table>
 {% endblock %}

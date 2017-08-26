@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-import os
 import re
 import parse
 import random
@@ -10,18 +9,11 @@ import export.pdf as pdf
 TEMPLATE_DIR = './templates'
 EXPORT_DIR = './export'
 
+app = Flask(__name__)
 
-template_dir = os.path.abspath(os.path.dirname(__file__))
-template_dir = os.path.join(template_dir, 'templates')
-print(template_dir)
-
-app = Flask(__name__, template_folder=template_dir)
-
-"""
 @app.route('/')
 def display():
     return "Looks like it works!"
-"""
 
 def pad(s, n):
     return '0'*(n-len(s))+s
@@ -94,21 +86,24 @@ def index():
     amount_of_units = parse.num_of_units()
     units_list = parse.get_units_list()
     units_dict = parse.get_assess_dict()
-    data["unit_loaded"] = []
+    string = ''
     for i in units_dict:
-        data["unit_loaded"].append("%s"%i)
+        string += i+";"
+    data["Unit"] = string
 
     # Units - Assessments Loaded
-    data["unit_assess"] = []
+    string = ""
     for i in range(amount_of_units):
         percent = str(parse.get_unit_percentage(i, units_list))
-        data["unit_assess"].append("%s" % percent)
+        string += "%s;" % percent
+    data["Asses"] = string
 
     # Units - Exams
-    data["unit_exam"] = []
+    string = ""
     for i in range(amount_of_units):
         percent = str(parse.get_exam_percentage(i, units_list))
-        data["unit_exam"].append("%s" % percent)
+        string += "%s;" % percent
+    data["Exam"] = string
 
     # Assessment dates being added in?
     assess = parse.get_assess_dict()
@@ -130,7 +125,7 @@ def index():
         multiple_weeks_weight += ";"
     data["Multiple_name"] = multiple_weeks_name
     data["Multiple_weight"] = multiple_weeks_weight
-    return render_template(str('/index.html'), data=data)
+    return render_template(str(TEMPLATE_DIR+'/index.html'), data)
 
 # Add Assessment
 @app.route('/add')
@@ -211,4 +206,4 @@ def new():
     redirect("/")
 
 
-app.run(debug=True, port=8008)
+app.run(debug=True, reload=True, port=8008)

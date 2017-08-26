@@ -12,16 +12,5 @@
     </div>
 
     <h3 style="padding-left:16px">{% block heading %}{% endblock %}</h3>
-
-    <div class=metanav>
-    {% if not session.logged_in %}
-    <a href="{{ url_for('login') }}">log in</a>
-    {% else %}
-    <a href="{{ url_for('logout') }}">log out</a>
-    {% endif %}
-    </div>
-    {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-    {% endfor %}
     {% block body %}{% endblock %}
 </div>
