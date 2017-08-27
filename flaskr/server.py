@@ -112,9 +112,13 @@ def index():
 
     # Assessment dates being added in?
     assess = parse.get_assess_dict()
-    multiple_weeks_name = ""
-    multiple_weeks_weight = ""
+    data["multiple_name"] = []
+    data["multiple_weight"] = []
+    data["multiple_counted"] = []
     for code in assess:
+        multi_name = []
+        multi_weight = []
+        multi_count = 0
         for ass in assess[code]:
             if ass['due_string'] != "Multiple Weeks":
                 if i in data['weeks']:
@@ -124,12 +128,21 @@ def index():
                 data['ass'].append(Ass(code, ass['name'], w, ass['weight']))
             else:
                 if ass['name']:
-                    multiple_weeks_name += "%s," % ass['name']
-                    multiple_weeks_weight += "%s," % ass['weight']
-        multiple_weeks_name += ";"
-        multiple_weeks_weight += ";"
-    data["Multiple_name"] = multiple_weeks_name
-    data["Multiple_weight"] = multiple_weeks_weight
+                    multi_name.append("%s" % ass['name'])
+                    multi_weight.append("%s" % ass['weight'])
+                    multi_count += 1
+        print(multi_name)
+        print(multi_weight)
+        print(multi_count)
+        data["multiple_counted"].append(multi_count)
+        data["multiple_name"].append(multi_name)
+        data["multiple_weight"].append(multi_weight)
+
+
+
+
+
+
     return render_template(str('/index.html'), data=data)
 
 # Add Assessment
